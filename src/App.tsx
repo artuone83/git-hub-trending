@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import { Container, FilteringOptions, RepositoriesList } from './components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Header = styled.header`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px solid gray;
+`;
+
+const Main = styled.main``;
+
+const Footer = styled.footer`
+  border-top: 1px solid gray;
+`;
+
+const App = (): JSX.Element => (
+  <Container>
+    <Header>
+      <p>Github Unofficial Trending API</p>
+    </Header>
+    <Main>
+      <FilteringOptions />
+      <RepositoriesList />
+    </Main>
+    <Footer>Footer</Footer>
+  </Container>
+);
 
 export default App;
