@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PuffLoader from 'react-spinners/PuffLoader';
 import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
 
 const Wrapper = styled.div<{ isListVisible: boolean }>`
@@ -32,6 +33,7 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
   left: 0;
   background: white;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 
   li {
     padding: 7px 10px;
@@ -65,6 +67,7 @@ const lang = [
 const LanguagesDropdown = (): JSX.Element => {
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
+  const isLoading = true;
 
   let currentLanguage = 'Select language';
   if (selectedLanguage) {
@@ -79,7 +82,7 @@ const LanguagesDropdown = (): JSX.Element => {
   return (
     <Wrapper isListVisible={isListVisible} onClick={() => setIsListVisible(!isListVisible)}>
       <p>{currentLanguage}</p>
-      <ArrowIcon />
+      {isLoading ? <PuffLoader size={30} /> : <ArrowIcon />}
       <LanguagesList isListVisible={isListVisible}>
         {lang.map(({ name }) => (
           <li key={name} onClick={() => handleLangClick(name)}>

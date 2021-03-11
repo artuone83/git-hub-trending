@@ -7,7 +7,7 @@ const Tabs = styled.div`
   align-items: center;
 `;
 
-const TimeRangeStyled = styled.div<{ isActive: boolean }>`
+const TimeRangeTab = styled.div<{ isActive: boolean }>`
   background: #f2f2f2;
   padding: 10px 5px;
   color: rgba(33, 33, 33, 0.42);
@@ -52,9 +52,9 @@ const TimeRange = (): JSX.Element => {
   return (
     <Tabs>
       {since.map(({ name, value, id }) => (
-        <TimeRangeStyled key={id} isActive={activeTimeRange === value} onClick={() => handleTimeRangeClick(value)}>
+        <TimeRangeTab key={id} isActive={activeTimeRange === value} onClick={() => handleTimeRangeClick(value)}>
           {name}
-        </TimeRangeStyled>
+        </TimeRangeTab>
       ))}
     </Tabs>
   );
