@@ -9,7 +9,16 @@ const Header = styled.header`
   border-bottom: 1px solid gray;
 `;
 
-const Main = styled.main``;
+const Main = styled.main`
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: auto minmax(350px, auto); /*repeat(2, minmax(350px, auto));*/
+  grid-gap: 18px;
+
+  grid-template-areas:
+    'filtering filtering filtering filtering filtering filtering filtering filtering'
+    'repositories repositories repositories repositories repositories repositories repositories repositories ';
+`;
 
 const Footer = styled.footer`
   border-top: 1px solid gray;
