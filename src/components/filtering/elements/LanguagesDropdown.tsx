@@ -1,92 +1,58 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-debugger */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import PuffLoader from 'react-spinners/PuffLoader';
+import { useSelector, useDispatch } from 'react-redux';
 import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
-
-const Wrapper = styled.div<{ isListVisible: boolean }>`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 7px 10px;
-  border: 1px solid rgba(33, 33, 33, 0.42);
-  min-width: 175px;
-  cursor: pointer;
-
-  p {
-    margin-right: 10px;
-  }
-
-  svg {
-    transition: 0.5s;
-    transform: ${({ isListVisible }) => (isListVisible ? 'rotate(180deg)' : 'rotate(0)')};
-  }
-`;
-
-const LanguagesList = styled.ul<{ isListVisible: boolean }>`
-  position: absolute;
-  display: ${({ isListVisible }) => (isListVisible ? 'block' : 'none')};
-  right: 0;
-  top: calc(100% + 10px);
-  left: 0;
-  background: white;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-
-  li {
-    padding: 7px 10px;
-    cursor: pointer;
-    transition: 0.5s;
-
-    &:hover {
-      background: #f5f5f5;
-    }
-  }
-`;
-
-const lang = [
-  {
-    name: 'JS',
-  },
-  {
-    name: 'TS',
-  },
-  {
-    name: 'JAVA',
-  },
-  {
-    name: 'PHP',
-  },
-  {
-    name: 'HTML',
-  },
-];
+import { selectIsFetching, selectLanguages, LanguagesResponse, setIsFetching, setLanguages } from './languagesSlice';
+import { Wrapper, LanguagesList } from './languageDropdown.styled';
 
 const LanguagesDropdown = (): JSX.Element => {
-  const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState({ name: 'Select language', urlParam: '' });
   const [isListVisible, setIsListVisible] = useState(false);
-  const isLoading = true;
+  const dispatch = useDispatch();
+  const languages = useSelector(selectLanguages) as LanguagesResponse[];
+  const isFetching = useSelector(selectIsFetching);
 
-  let currentLanguage = 'Select language';
-  if (selectedLanguage) {
-    currentLanguage = selectedLanguage;
-  }
+  useEffect(() => {
+    try {
+      const getLanguages = async (): Promise<LanguagesResponse[]> => {
+        dispatch(setIsFetching(true));
+        const response = await fetch('http://localhost:9000/languages');
+        const data = await response.json();
 
-  const handleLangClick = (name: string): void => {
-    setSelectedLanguage(name);
+        if (!response.ok) {
+          throw new Error('Http error: could not get languages');
+        }
+
+        return data;
+      };
+
+      getLanguages().then((data) => {
+        dispatch(setLanguages(data));
+        dispatch(setIsFetching(false));
+      });
+    } catch (error) {
+      console.error(error);
+      dispatch(setIsFetching(false));
+    }
+  }, []);
+
+  const handleLangClick = (value: { name: string; urlParam: string }): void => {
+    setSelectedLanguage(value);
     setIsListVisible(false);
   };
 
   return (
-    <Wrapper isListVisible={isListVisible} onClick={() => setIsListVisible(!isListVisible)}>
-      <p>{currentLanguage}</p>
-      {isLoading ? <PuffLoader size={30} /> : <ArrowIcon />}
+    <Wrapper isListVisible={isListVisible} isFetching={isFetching} onClick={() => setIsListVisible(!isListVisible)}>
+      <p>{selectedLanguage.name}</p>
+      {isFetching ? <PuffLoader size={30} /> : <ArrowIcon />}
       <LanguagesList isListVisible={isListVisible}>
-        {lang.map(({ name }) => (
-          <li key={name} onClick={() => handleLangClick(name)}>
-            {name}
+        {languages.map((lang, index) => (
+          <li key={`${lang.name}-${index}`} onClick={() => handleLangClick(lang)}>
+            {lang.name}
           </li>
         ))}
       </LanguagesList>

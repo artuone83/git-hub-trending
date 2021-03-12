@@ -58,7 +58,7 @@ const RepositoriesList: React.FC = () => {
       setTableData(data);
       setIsLoading(false);
     }, 5000);
-  });
+  }, []);
 
   const handleFilterChange = (sortField: string, direction: Direction): void => {
     const sortedData = sortBy(tableData, [sortField]);
