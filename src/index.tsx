@@ -1,36 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './redux/store';
 import theme from './styles/theme';
-
-const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  html {
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-  }
-  body {
-    background: #f2f2f2;
-    overflow-x: hidden;
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-  li {
-    list-style-type: none;
-  }
-  p {
-    font-size: 1rem;
-  }`;
+import GlobalStyle from './styles/globalStyle';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -44,7 +20,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
