@@ -44,6 +44,7 @@ export const getRepositoriesAsync = (language = '', timeRange = ''): AppThunk =>
   try {
     const getRepositories = async (): Promise<RepositoriesResponse[]> => {
       dispatch(setIsFetching(true));
+
       const response = await fetch(`http://localhost:9000/repositories?language=${language}&since=${timeRange}`);
       // ?language=javascript&since=weekly
       if (!response.ok) {

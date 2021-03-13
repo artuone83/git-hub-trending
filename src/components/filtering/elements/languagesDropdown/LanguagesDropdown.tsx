@@ -6,6 +6,9 @@ import React, { useState, useEffect } from 'react';
 import PuffLoader from 'react-spinners/PuffLoader';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReactComponent as ArrowIcon } from '../../../assets/arrow.svg';
+import { setToLocalStorage } from '../../../../utils/setToLocalStorage';
+import { getFromLocalStorage } from '../../../../utils/getFromLocalStorage';
+import { LocalStorageKeys } from '../../../../models/localStorageKeys';
 import {
   selectIsFetching,
   selectLanguages,
@@ -26,10 +29,27 @@ const LanguagesDropdown = (): JSX.Element => {
     dispatch(getLanguagesAsync());
   }, []);
 
+  useEffect(() => {
+    const storedLanguage = getFromLocalStorage(LocalStorageKeys.LANGUAGE);
+
+    if (storedLanguage) {
+      dispatch(setLanguageChoice(storedLanguage));
+      const findIndex = languages?.findIndex((lang) => lang.urlParam === storedLanguage);
+
+      if (findIndex !== -1) {
+        setSelectedLanguage({ name: languages[findIndex].name, urlParam: storedLanguage });
+      }
+    }
+  }, [languages]);
+
   const handleLangClick = (value: { name: string; urlParam: string }): void => {
+    const { urlParam } = value;
+
     setSelectedLanguage(value);
     setIsListVisible(false);
-    dispatch(setLanguageChoice(value.urlParam));
+    dispatch(setLanguageChoice(urlParam));
+
+    setToLocalStorage('language', `${urlParam}`);
   };
 
   return (
@@ -37,11 +57,15 @@ const LanguagesDropdown = (): JSX.Element => {
       <p>{selectedLanguage.name}</p>
       {isFetching ? <PuffLoader size={15} /> : <ArrowIcon />}
       <LanguagesList isListVisible={isListVisible}>
-        {languages.map((lang, index) => (
-          <li key={`${lang.name}-${index}`} onClick={() => handleLangClick(lang)}>
-            {lang.name}
-          </li>
-        ))}
+        {languages.map((lang, index) => {
+          const { name } = lang;
+
+          return (
+            <li key={`${name}-${index}`} onClick={() => handleLangClick(lang)}>
+              {name}
+            </li>
+          );
+        })}
       </LanguagesList>
     </Wrapper>
   );

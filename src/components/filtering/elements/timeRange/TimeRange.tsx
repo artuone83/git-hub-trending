@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { LocalStorageKeys } from '../../../../models/localStorageKeys';
+import { getFromLocalStorage } from '../../../../utils/getFromLocalStorage';
+import { setToLocalStorage } from '../../../../utils/setToLocalStorage';
 import { getRepositoriesAsync } from '../../../repositoriesList/repositoriesSlice';
 import { selectLanguageChoice } from '../languagesDropdown/languagesSlice';
 import { Tabs, TimeRangeTab } from './timeRange.styled';
@@ -33,12 +36,23 @@ const TimeRange = (): JSX.Element => {
   const languageChoice = useSelector(selectLanguageChoice);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const sinceRange = getFromLocalStorage(LocalStorageKeys.SINCE);
+
+    if (sinceRange) {
+      setActiveTimeRange(sinceRange);
+    }
+  }, []);
+
   const handleTimeRangeClick = (range: string): void => {
     setActiveTimeRange(range);
+
     let timeRange = activeTimeRange;
     timeRange = range;
+    setToLocalStorage('since', `${range}`);
     dispatch(getRepositoriesAsync(languageChoice, timeRange));
   };
+
   return (
     <Tabs>
       {since.map(({ name, value, id }) => (

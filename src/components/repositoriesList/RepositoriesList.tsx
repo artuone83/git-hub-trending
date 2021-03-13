@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { sortBy } from 'lodash';
 import PuffLoader from 'react-spinners/PuffLoader';
 import { useSelector, useDispatch } from 'react-redux';
+import { getFromLocalStorage } from '../../utils/getFromLocalStorage';
+import { LocalStorageKeys } from '../../models/localStorageKeys';
 import Table, { Direction } from './elements/Table';
-import { selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
+import { getRepositoriesAsync, selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
 import { StyledPanel, Title } from './repositoriesList.styled';
 
 const viewModel = {
@@ -37,6 +39,19 @@ const RepositoriesList: React.FC = () => {
   const dispatch = useDispatch();
   const repositories = useSelector(selectRepositories);
   const isFetching = useSelector(selectIsFetching);
+
+  useEffect(() => {
+    const storedLanguage = getFromLocalStorage(LocalStorageKeys.LANGUAGE);
+    const storedSince = getFromLocalStorage(LocalStorageKeys.SINCE);
+
+    if (storedLanguage && storedSince) {
+      dispatch(getRepositoriesAsync(storedLanguage, storedSince));
+    } else if (storedLanguage) {
+      dispatch(getRepositoriesAsync(storedLanguage, ''));
+    } else if (storedSince) {
+      dispatch(getRepositoriesAsync('', storedSince));
+    }
+  }, []);
 
   useEffect(() => {
     if (repositories.length === 0) {
