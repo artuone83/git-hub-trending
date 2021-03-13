@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getFromLocalStorage } from '../../utils/getFromLocalStorage';
 import { LocalStorageKeys } from '../../models/localStorageKeys';
 import { ReactComponent as OpenBookIcon } from '../assets/open-book.svg';
-import Table, { Direction } from './elements/Table';
+import Table, { Direction } from './elements/table/Table';
 import { getRepositoriesAsync, selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
 import { StyledPanel, Title } from './repositoriesList.styled';
 
