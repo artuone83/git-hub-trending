@@ -21,7 +21,7 @@ import {
 import { Wrapper, LanguagesList } from './languagesDropdown.styled';
 
 const LanguagesDropdown = (): JSX.Element => {
-  const [selectedLanguage, setSelectedLanguage] = useState({ name: '', urlParam: '' });
+  const [selectedLanguage, setSelectedLanguage] = useState({ name: 'Select language', urlParam: '' });
   const [isListVisible, setIsListVisible] = useState(false);
   const dispatch = useDispatch();
   const languages = useSelector(selectLanguages) as LanguagesResponse[];
