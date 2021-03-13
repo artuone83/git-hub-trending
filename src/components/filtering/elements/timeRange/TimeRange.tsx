@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { LocalStorageKeys } from '../../../../models/localStorageKeys';
 import { getFromLocalStorage } from '../../../../utils/getFromLocalStorage';
@@ -6,6 +6,7 @@ import { setToLocalStorage } from '../../../../utils/setToLocalStorage';
 import { getRepositoriesAsync } from '../../../repositoriesList/repositoriesSlice';
 import { selectLanguageChoice } from '../languagesDropdown/languagesSlice';
 import { Tabs, TimeRangeTab } from './timeRange.styled';
+import { selectActiveTimeRange, setActiveTimeRange } from './timeRangeSlice';
 
 enum Name {
   DAILY = 'Daily',
@@ -32,7 +33,7 @@ const since = [
 ];
 
 const TimeRange = (): JSX.Element => {
-  const [activeTimeRange, setActiveTimeRange] = useState('');
+  const activeTimeRange = useSelector(selectActiveTimeRange);
   const languageChoice = useSelector(selectLanguageChoice);
   const dispatch = useDispatch();
 
@@ -40,17 +41,14 @@ const TimeRange = (): JSX.Element => {
     const sinceRange = getFromLocalStorage(LocalStorageKeys.SINCE);
 
     if (sinceRange) {
-      setActiveTimeRange(sinceRange);
+      dispatch(setActiveTimeRange(sinceRange));
     }
   }, []);
 
   const handleTimeRangeClick = (range: string): void => {
-    setActiveTimeRange(range);
-
-    let timeRange = activeTimeRange;
-    timeRange = range;
+    dispatch(setActiveTimeRange(range));
     setToLocalStorage(LocalStorageKeys.SINCE, `${range}`);
-    dispatch(getRepositoriesAsync(languageChoice, timeRange));
+    dispatch(getRepositoriesAsync(languageChoice, activeTimeRange));
   };
 
   return (

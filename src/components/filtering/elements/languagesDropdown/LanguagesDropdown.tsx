@@ -10,6 +10,7 @@ import { setToLocalStorage } from '../../../../utils/setToLocalStorage';
 import { getFromLocalStorage } from '../../../../utils/getFromLocalStorage';
 import { LocalStorageKeys } from '../../../../models/localStorageKeys';
 import { getRepositoriesAsync } from '../../../repositoriesList/repositoriesSlice';
+import { setActiveTimeRange } from '../timeRange/timeRangeSlice';
 import {
   selectIsFetching,
   selectLanguages,
@@ -48,10 +49,13 @@ const LanguagesDropdown = (): JSX.Element => {
 
     setSelectedLanguage(value);
     setIsListVisible(false);
+
     dispatch(setLanguageChoice(languageChoice));
     dispatch(getRepositoriesAsync(languageChoice, ''));
-
     setToLocalStorage(LocalStorageKeys.LANGUAGE, `${languageChoice}`);
+
+    dispatch(setActiveTimeRange(''));
+    window.localStorage.removeItem(LocalStorageKeys.SINCE);
   };
 
   return (
