@@ -9,6 +9,7 @@ import { ReactComponent as ArrowIcon } from '../../../assets/arrow.svg';
 import { setToLocalStorage } from '../../../../utils/setToLocalStorage';
 import { getFromLocalStorage } from '../../../../utils/getFromLocalStorage';
 import { LocalStorageKeys } from '../../../../models/localStorageKeys';
+import { getRepositoriesAsync } from '../../../repositoriesList/repositoriesSlice';
 import {
   selectIsFetching,
   selectLanguages,
@@ -43,13 +44,14 @@ const LanguagesDropdown = (): JSX.Element => {
   }, [languages]);
 
   const handleLangClick = (value: { name: string; urlParam: string }): void => {
-    const { urlParam } = value;
+    const { urlParam: languageChoice } = value;
 
     setSelectedLanguage(value);
     setIsListVisible(false);
-    dispatch(setLanguageChoice(urlParam));
+    dispatch(setLanguageChoice(languageChoice));
+    dispatch(getRepositoriesAsync(languageChoice, ''));
 
-    setToLocalStorage('language', `${urlParam}`);
+    setToLocalStorage(LocalStorageKeys.LANGUAGE, `${languageChoice}`);
   };
 
   return (
