@@ -18,7 +18,7 @@ const LanguageSelector = styled.p<{ isFetching: boolean }>`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  padding: 7px 10px;
+  padding: 12px 14px;
 
   ${({ isFetching }) =>
     isFetching &&
@@ -40,7 +40,7 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
   z-index: ${zIndex.level1};
 
   li {
-    padding: 7px 10px;
+    padding: 12px 14px;
     cursor: pointer;
     transition: 0.5s;
 
