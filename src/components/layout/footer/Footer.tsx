@@ -13,7 +13,7 @@ const Footer: React.FC = () => (
         www.flaticon.com
       </a>
     </div>
-    <p>{new Date().getFullYear()}</p>
+    <p>Artur Woźniak &#169; {new Date().getFullYear()}</p>
   </StyledFooter>
 );
 

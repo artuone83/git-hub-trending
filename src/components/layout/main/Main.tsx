@@ -2,8 +2,12 @@ import React from 'react';
 import { FilteringOptions, RepositoriesList } from '../../../components';
 import { StyledMain } from './main.styled';
 
-const Main: React.FC = () => (
-  <StyledMain>
+type Props = {
+  headerHeight: number;
+};
+
+const Main: React.FC<Props> = ({ headerHeight }) => (
+  <StyledMain headerHeight={headerHeight}>
     <FilteringOptions />
     <RepositoriesList />
   </StyledMain>
