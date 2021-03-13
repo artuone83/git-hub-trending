@@ -2,7 +2,7 @@
 /* eslint-disable no-debugger */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import PuffLoader from 'react-spinners/PuffLoader';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReactComponent as ArrowIcon } from '../../../assets/arrow.svg';
@@ -21,14 +21,23 @@ import {
 import { Wrapper, LanguagesList } from './languagesDropdown.styled';
 
 const LanguagesDropdown = (): JSX.Element => {
-  const [selectedLanguage, setSelectedLanguage] = useState({ name: 'Select language', urlParam: '' });
+  const [selectedLanguage, setSelectedLanguage] = useState({ name: '', urlParam: '' });
   const [isListVisible, setIsListVisible] = useState(false);
   const dispatch = useDispatch();
   const languages = useSelector(selectLanguages) as LanguagesResponse[];
   const isFetching = useSelector(selectIsFetching);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(getLanguagesAsync());
+
+    document.addEventListener('click', outsideClickListener);
+    document.addEventListener('keyup', escapeListener);
+
+    return () => {
+      document.removeEventListener('click', outsideClickListener);
+      document.removeEventListener('keyup', escapeListener);
+    };
   }, []);
 
   useEffect(() => {
@@ -43,6 +52,21 @@ const LanguagesDropdown = (): JSX.Element => {
       }
     }
   }, [languages]);
+
+  const outsideClickListener = useCallback(
+    (e: MouseEvent) => {
+      if (!ref?.current?.contains(e.target as Node)) {
+        setIsListVisible(false);
+      }
+    },
+    [ref.current]
+  );
+
+  const escapeListener = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setIsListVisible(false);
+    }
+  }, []);
 
   const handleLangClick = (value: { name: string; urlParam: string }): void => {
     const { urlParam: languageChoice } = value;
@@ -59,7 +83,12 @@ const LanguagesDropdown = (): JSX.Element => {
   };
 
   return (
-    <Wrapper isListVisible={isListVisible} isFetching={isFetching} onClick={() => setIsListVisible(!isListVisible)}>
+    <Wrapper
+      ref={ref}
+      isListVisible={isListVisible}
+      isFetching={isFetching}
+      onClick={() => setIsListVisible(!isListVisible)}
+    >
       <p>{selectedLanguage.name}</p>
       {isFetching ? <PuffLoader size={15} /> : <ArrowIcon />}
       <LanguagesList isListVisible={isListVisible}>
