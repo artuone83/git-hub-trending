@@ -47,8 +47,10 @@ const TimeRange = (): JSX.Element => {
 
   const handleTimeRangeClick = (range: string): void => {
     dispatch(setActiveTimeRange(range));
+    let timeRange = activeTimeRange;
+    timeRange = range;
     setToLocalStorage(LocalStorageKeys.SINCE, `${range}`);
-    dispatch(getRepositoriesAsync(languageChoice, activeTimeRange));
+    dispatch(getRepositoriesAsync(languageChoice, timeRange));
   };
 
   return (
