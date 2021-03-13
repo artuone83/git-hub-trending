@@ -2,28 +2,28 @@ import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div<{ isListVisible: boolean; isFetching: boolean }>`
   position: relative;
+  border: 1px solid rgba(33, 33, 33, 0.42);
+  min-width: 175px;
+
+  svg {
+    margin-left: 10px;
+    transition: 0.5s;
+    transform: ${({ isListVisible }) => (isListVisible ? 'rotate(180deg)' : 'rotate(0)')};
+  }
+`;
+
+const LanguageSelector = styled.p<{ isFetching: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 7px 10px;
-  border: 1px solid rgba(33, 33, 33, 0.42);
-  min-width: 175px;
   cursor: pointer;
+  padding: 7px 10px;
 
   ${({ isFetching }) =>
     isFetching &&
     css`
       pointer-events: none;
     `}
-
-  p {
-    margin-right: 10px;
-  }
-
-  svg {
-    transition: 0.5s;
-    transform: ${({ isListVisible }) => (isListVisible ? 'rotate(180deg)' : 'rotate(0)')};
-  }
 `;
 
 const LanguagesList = styled.ul<{ isListVisible: boolean }>`
@@ -31,7 +31,7 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
   display: ${({ isListVisible }) => (isListVisible ? 'block' : 'none')};
   top: calc(100% + 10px);
   left: 0;
-  height: 450px;
+  max-height: 450px;
   overflow-y: scroll;
   white-space: nowrap;
   background: white;
@@ -49,4 +49,4 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
   }
 `;
 
-export { Wrapper, LanguagesList };
+export { Wrapper, LanguagesList, LanguageSelector };

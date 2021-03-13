@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-debugger */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -11,6 +12,7 @@ import { getFromLocalStorage } from '../../../../utils/getFromLocalStorage';
 import { LocalStorageKeys } from '../../../../models/localStorageKeys';
 import { getRepositoriesAsync } from '../../../repositoriesList/repositoriesSlice';
 import { setActiveTimeRange } from '../timeRange/timeRangeSlice';
+import { SearchBar } from '../searchBar';
 import {
   selectIsFetching,
   selectLanguages,
@@ -18,15 +20,22 @@ import {
   setLanguageChoice,
   getLanguagesAsync,
 } from './languagesSlice';
-import { Wrapper, LanguagesList } from './languagesDropdown.styled';
+import { Wrapper, LanguagesList, LanguageSelector } from './languagesDropdown.styled';
 
 const LanguagesDropdown = (): JSX.Element => {
-  const [selectedLanguage, setSelectedLanguage] = useState({ name: 'Select language', urlParam: '' });
-  const [isListVisible, setIsListVisible] = useState(false);
-  const dispatch = useDispatch();
-  const languages = useSelector(selectLanguages) as LanguagesResponse[];
+  const [selectedLanguage, setSelectedLanguage] = useState({
+    name: 'Select language',
+    urlParam: '',
+  });
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const isFetching = useSelector(selectIsFetching);
-  const ref = useRef<HTMLDivElement>(null);
+  const languages = useSelector(selectLanguages) as LanguagesResponse[];
+  const dispatch = useDispatch();
+
+  const [isListVisible, setIsListVisible] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [filteredLanguages, setFilteredLanguages] = useState(languages);
 
   useEffect(() => {
     dispatch(getLanguagesAsync());
@@ -48,18 +57,23 @@ const LanguagesDropdown = (): JSX.Element => {
       const findIndex = languages?.findIndex((lang) => lang.urlParam === storedLanguage);
 
       if (findIndex !== -1) {
-        setSelectedLanguage({ name: languages[findIndex].name, urlParam: storedLanguage });
+        setSelectedLanguage({
+          name: languages[findIndex].name,
+          urlParam: storedLanguage,
+        });
       }
     }
+
+    setFilteredLanguages(languages);
   }, [languages]);
 
   const outsideClickListener = useCallback(
     (e: MouseEvent) => {
-      if (!ref?.current?.contains(e.target as Node)) {
+      if (!modalRef?.current?.contains(e.target as Node)) {
         setIsListVisible(false);
       }
     },
-    [ref.current]
+    [modalRef.current]
   );
 
   const escapeListener = useCallback((e: KeyboardEvent) => {
@@ -82,21 +96,45 @@ const LanguagesDropdown = (): JSX.Element => {
     window.localStorage.removeItem(LocalStorageKeys.SINCE);
   };
 
+  const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (e): void => {
+    const {
+      target: { value },
+    } = e;
+
+    setSearchValue(value);
+
+    let currentValue = searchValue;
+    currentValue = value;
+
+    const filtered = languages.filter((lang) => lang.name.toLowerCase().includes(currentValue.toLowerCase()));
+
+    setFilteredLanguages(filtered);
+  };
+
   return (
-    <Wrapper
-      ref={ref}
-      isListVisible={isListVisible}
-      isFetching={isFetching}
-      onClick={() => setIsListVisible(!isListVisible)}
-    >
-      <p>{selectedLanguage.name}</p>
-      {isFetching ? <PuffLoader size={15} /> : <ArrowIcon />}
+    <Wrapper ref={modalRef} isListVisible={isListVisible} isFetching={isFetching}>
+      <LanguageSelector
+        onClick={() => {
+          setIsListVisible(!isListVisible);
+        }}
+        isFetching={isFetching}
+      >
+        {selectedLanguage.name}
+        {isFetching ? <PuffLoader size={15} /> : <ArrowIcon />}
+      </LanguageSelector>
+
       <LanguagesList isListVisible={isListVisible}>
-        {languages.map((lang, index) => {
+        <SearchBar handleSearchChange={handleSearchChange} searchValue={searchValue} />
+        {filteredLanguages.map((lang, index) => {
           const { name } = lang;
 
           return (
-            <li key={`${name}-${index}`} onClick={() => handleLangClick(lang)}>
+            <li
+              key={`${name}-${index}`}
+              onClick={() => {
+                handleLangClick(lang);
+              }}
+            >
               {name}
             </li>
           );
