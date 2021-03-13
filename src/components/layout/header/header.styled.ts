@@ -22,4 +22,13 @@ const StyledHeader = styled.header`
   }
 `;
 
-export { StyledHeader };
+const MyGitHyb = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 12px;
+  }
+`;
+
+export { StyledHeader, MyGitHyb };

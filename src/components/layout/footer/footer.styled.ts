@@ -12,6 +12,10 @@ const StyledFooter = styled.footer`
   color: ${({ theme }) => theme.colors.white};
   z-index: 2;
   padding: 15px 20px;
+
+  h1 {
+    font-size: 16px;
+  }
 `;
 
 export { StyledFooter };
