@@ -4,6 +4,7 @@ import PuffLoader from 'react-spinners/PuffLoader';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFromLocalStorage } from '../../utils/getFromLocalStorage';
 import { LocalStorageKeys } from '../../models/localStorageKeys';
+import { ReactComponent as OpenBookIcon } from '../assets/open-book.svg';
 import Table, { Direction } from './elements/Table';
 import { getRepositoriesAsync, selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
 import { StyledPanel, Title } from './repositoriesList.styled';
@@ -70,6 +71,7 @@ const RepositoriesList: React.FC = () => {
   return (
     <StyledPanel>
       <Title>
+        <OpenBookIcon />
         Repositories <span>({repositories.length}x)</span> {isFetching && <PuffLoader size={15} />}
       </Title>
       {repositories.length > 0 ? (

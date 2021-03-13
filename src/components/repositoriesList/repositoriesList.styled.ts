@@ -14,6 +14,12 @@ const Title = styled.p`
   span {
     margin-left: 5px;
   }
+
+  svg {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+  }
 `;
 
 export { StyledPanel, Title };
