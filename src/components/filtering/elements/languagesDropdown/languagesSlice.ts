@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../../redux/store';
+import { RootState, AppThunk } from '../../../../redux/store';
 
 export type LanguagesResponse = { urlParam: string; name: string };
 

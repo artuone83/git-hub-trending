@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { sortBy } from 'lodash';
-import styled from 'styled-components';
 import PuffLoader from 'react-spinners/PuffLoader';
 import { useSelector, useDispatch } from 'react-redux';
-import { Panel } from '../layout';
 import Table, { Direction } from './elements/Table';
 import { selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
-
-const StyledPanel = styled(Panel)`
-  grid-area: repositories;
-`;
-
-const Title = styled.p`
-  display: flex;
-  align-items: center;
-  margin-bottom: 60px;
-  font-weight: bold;
-
-  span {
-    margin-left: 5px;
-  }
-`;
+import { StyledPanel, Title } from './repositoriesList.styled';
 
 const viewModel = {
   fields: [

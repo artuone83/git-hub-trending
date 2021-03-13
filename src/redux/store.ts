@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import languageReducer from '../components/filtering/elements/languagesSlice';
+import languageReducer from '../components/filtering/elements/languagesDropdown/languagesSlice';
 import repositoriesReducer from '../components/repositoriesList/repositoriesSlice';
 
 export const store = configureStore({

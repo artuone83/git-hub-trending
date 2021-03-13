@@ -1,2 +1,2 @@
-export { default as LanguageDropdown } from './LanguagesDropdown';
-export { default as TimeRange } from './TimeRange';
+export * from './languagesDropdown';
+export * from './timeRange';

@@ -1,17 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Panel } from '../layout';
-import { LanguageDropdown, TimeRange } from './elements';
-
-const StyledPanel = styled(Panel)`
-  grid-area: filtering;
-  display: flex;
-  justify-content: space-between;
-`;
+import { LanguagesDropdown, TimeRange } from './elements';
+import { StyledPanel } from './filteringOptions.styled';
 
 const FilteringOptions: React.FC = () => (
   <StyledPanel>
-    <LanguageDropdown />
+    <LanguagesDropdown />
     <TimeRange />
   </StyledPanel>
 );

@@ -1,49 +1,30 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRepositoriesAsync } from '../../repositoriesList/repositoriesSlice';
-import { selectLanguageChoice } from './languagesSlice';
+import { getRepositoriesAsync } from '../../../repositoriesList/repositoriesSlice';
+import { selectLanguageChoice } from '../languagesDropdown/languagesSlice';
+import { Tabs, TimeRangeTab } from './timeRange.styled';
 
-const Tabs = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const TimeRangeTab = styled.div<{ isActive: boolean }>`
-  background: #f2f2f2;
-  padding: 10px 5px;
-  color: rgba(33, 33, 33, 0.42);
-  border-radius: 4px;
-  min-width: 95px;
-  text-align: center;
-  margin-right: 10px;
-  transition: 0.5s;
-  cursor: pointer;
-
-  ${({ isActive }) =>
-    isActive &&
-    `
-    color: #ffffff;
-    background: #2D8EFF;
-  `}
-`;
+enum Name {
+  DAILY = 'Daily',
+  WEEKLY = 'Weekly',
+  MONTHLY = 'Monthly',
+}
 
 const since = [
   {
     id: 0,
-    name: 'Daily',
-    value: 'daily',
+    name: Name.DAILY,
+    value: Name.DAILY.toLowerCase(),
   },
   {
     id: 1,
-    name: 'Weekly',
-    value: 'weekly',
+    name: Name.WEEKLY,
+    value: Name.WEEKLY.toLowerCase(),
   },
   {
     id: 2,
-    name: 'Monthly',
-    value: 'monthly',
+    name: Name.MONTHLY,
+    value: Name.MONTHLY.toLowerCase(),
   },
 ];
 

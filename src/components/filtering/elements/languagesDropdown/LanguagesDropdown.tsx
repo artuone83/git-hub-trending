@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import PuffLoader from 'react-spinners/PuffLoader';
 import { useSelector, useDispatch } from 'react-redux';
-import { ReactComponent as ArrowIcon } from '../../assets/arrow.svg';
+import { ReactComponent as ArrowIcon } from '../../../assets/arrow.svg';
 import {
   selectIsFetching,
   selectLanguages,
@@ -13,7 +13,7 @@ import {
   setLanguageChoice,
   getLanguagesAsync,
 } from './languagesSlice';
-import { Wrapper, LanguagesList } from './languageDropdown.styled';
+import { Wrapper, LanguagesList } from './languagesDropdown.styled';
 
 const LanguagesDropdown = (): JSX.Element => {
   const [selectedLanguage, setSelectedLanguage] = useState({ name: 'Select language', urlParam: '' });

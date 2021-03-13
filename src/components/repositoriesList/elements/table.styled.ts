@@ -62,6 +62,12 @@ const Td = styled.td`
   border-bottom: 1px solid #f2f2f2;
 `;
 
-const TableRow = styled.tr``;
+const TableRow = styled.tr`
+  transition: 0.5s;
+
+  &:hover {
+    background: #f2f2f2;
+  }
+`;
 
 export { Wrapper, StyledTable, TableRow, Td, Th };
