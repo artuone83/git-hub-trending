@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { getRepositoriesAsync } from '../../repositoriesList/repositoriesSlice';
+import { selectLanguageChoice } from './languagesSlice';
 
 const Tabs = styled.div`
   display: flex;
@@ -46,8 +49,14 @@ const since = [
 
 const TimeRange = (): JSX.Element => {
   const [activeTimeRange, setActiveTimeRange] = useState('');
+  const languageChoice = useSelector(selectLanguageChoice);
+  const dispatch = useDispatch();
+
   const handleTimeRangeClick = (range: string): void => {
     setActiveTimeRange(range);
+    let timeRange = activeTimeRange;
+    timeRange = range;
+    dispatch(getRepositoriesAsync(languageChoice, timeRange));
   };
   return (
     <Tabs>

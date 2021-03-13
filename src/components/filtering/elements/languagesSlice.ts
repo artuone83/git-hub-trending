@@ -1,17 +1,19 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../../store/store';
+import { RootState, AppThunk } from '../../../redux/store';
 
 export type LanguagesResponse = { urlParam: string; name: string };
 
-export interface LanguagesState {
+export type LanguagesState = {
   list: LanguagesResponse[];
   isFetching: boolean;
-}
+  languageChoice: string;
+};
 
 const initialState: LanguagesState = {
   list: [],
   isFetching: false,
+  languageChoice: '',
 };
 
 export const languagesSlice = createSlice({
@@ -24,22 +26,27 @@ export const languagesSlice = createSlice({
     setLanguages: (state, action: PayloadAction<LanguagesResponse[]>) => {
       state.list = action.payload;
     },
+    setLanguageChoice: (state, action: PayloadAction<string>) => {
+      state.languageChoice = action.payload;
+    },
   },
 });
 
-export const { setIsFetching, setLanguages } = languagesSlice.actions;
+export const { setIsFetching, setLanguages, setLanguageChoice } = languagesSlice.actions;
 
 export const selectLanguages = (state: RootState): LanguagesResponse[] => state.languages.list;
 
 export const selectIsFetching = (state: RootState): boolean => state.languages.isFetching;
-// TODO move from useEffect here - how
+
+export const selectLanguageChoice = (state: RootState): string => state.languages.languageChoice;
+
 export const getLanguagesAsync = (): AppThunk => (dispatch) => {
   try {
     const getLanguages = async (): Promise<LanguagesResponse[]> => {
       dispatch(setIsFetching(true));
       const response = await fetch('http://localhost:9000/languages');
 
-      if (response.ok) {
+      if (!response.ok) {
         throw new Error('Http error: could not get languages');
       }
 

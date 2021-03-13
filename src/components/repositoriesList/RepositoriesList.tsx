@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { sortBy } from 'lodash';
 import styled from 'styled-components';
 import PuffLoader from 'react-spinners/PuffLoader';
+import { useSelector, useDispatch } from 'react-redux';
 import { Panel } from '../layout';
-import Table, { Direction, TableDataType } from './elements/Table';
-import { data } from './data';
+import Table, { Direction } from './elements/Table';
+import { selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
 
 const StyledPanel = styled(Panel)`
   grid-area: repositories;
-  position: relative;
-`;
-
-const Loader = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 const Title = styled.p`
+  display: flex;
+  align-items: center;
   margin-bottom: 60px;
   font-weight: bold;
+
+  span {
+    margin-left: 5px;
+  }
 `;
 
 const viewModel = {
@@ -50,33 +49,34 @@ const viewModel = {
 };
 
 const RepositoriesList: React.FC = () => {
-  const [tableData, setTableData] = useState<TableDataType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [noDataMessage, setNoDataMessage] = useState('');
+  const dispatch = useDispatch();
+  const repositories = useSelector(selectRepositories);
+  const isFetching = useSelector(selectIsFetching);
 
   useEffect(() => {
-    setTimeout(() => {
-      setTableData(data);
-      setIsLoading(false);
-    }, 5000);
-  }, []);
+    if (repositories.length === 0) {
+      setNoDataMessage('No repositories for selected filtering options');
+    }
+  }, [repositories]);
 
   const handleFilterChange = (sortField: string, direction: Direction): void => {
-    const sortedData = sortBy(tableData, [sortField]);
+    const sortedData = sortBy(repositories, [sortField]);
     if (direction === Direction.Desc) {
       sortedData.reverse();
     }
-    setTableData(sortedData);
+    dispatch(setRepositories(sortedData));
   };
 
   return (
     <StyledPanel>
-      <Title>Repositories</Title>
-      {isLoading ? (
-        <Loader>
-          <PuffLoader size={30} />
-        </Loader>
+      <Title>
+        Repositories <span>({repositories.length}x)</span> {isFetching && <PuffLoader size={15} />}
+      </Title>
+      {repositories.length > 0 ? (
+        <Table viewModel={viewModel} data={repositories} onFilterChange={handleFilterChange} />
       ) : (
-        <Table viewModel={viewModel} data={tableData} onFilterChange={handleFilterChange} />
+        noDataMessage
       )}
     </StyledPanel>
   );
