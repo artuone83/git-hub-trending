@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyledFooter } from './footer.styled';
 
-const Footer: React.FC = () => (
-  <StyledFooter>
+const Footer = React.forwardRef<HTMLElement>((_, ref) => (
+  <StyledFooter ref={ref}>
     <div>
       Icons made by{' '}
       <a href='https://www.freepik.com' title='Freepik'>
@@ -15,6 +15,8 @@ const Footer: React.FC = () => (
     </div>
     <p>Artur Woźniak &#169; {new Date().getFullYear()}</p>
   </StyledFooter>
-);
+));
+
+Footer.displayName = 'Footer';
 
 export default Footer;
