@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components';
+import zIndex from '../../../../styles/zIndex';
 
 const Wrapper = styled.div<{ isListVisible: boolean; isFetching: boolean }>`
   position: relative;
-  border: 1px solid rgba(33, 33, 33, 0.42);
+  border: 1px solid ${({ theme }) => theme.colors.gray03};
   min-width: 175px;
 
   svg {
@@ -34,9 +35,9 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
   max-height: 450px;
   overflow-y: scroll;
   white-space: nowrap;
-  background: white;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  background: ${({ theme }) => theme.colors.white};
+  box-shadow: ${({ theme }) => theme.boxShadow.dp_9};
+  z-index: ${zIndex.level1};
 
   li {
     padding: 7px 10px;
@@ -44,7 +45,7 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
     transition: 0.5s;
 
     &:hover {
-      background: #f5f5f5;
+      background: ${({ theme }) => theme.colors.grayTable};
     }
   }
 `;

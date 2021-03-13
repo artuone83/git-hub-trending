@@ -12,28 +12,28 @@ const StyledSearchBar = styled.div`
   input {
     padding: 8px 4px;
     width: 100%;
-    border: 1px solid #24292e;
+    border: 1px solid ${({ theme }) => theme.colors.gray03};
     border-radius: 4px;
     font-family: 'Montserrat', sans-serif;
 
     ::-webkit-input-placeholder {
       /* Chrome/Opera/Safari */
-      color: #24292e;
+      color: ${({ theme }) => theme.colors.gray03};
       font-family: 'Montserrat', sans-serif;
     }
     ::-moz-placeholder {
       /* Firefox 19+ */
-      color: #24292e;
+      color: ${({ theme }) => theme.colors.gray03};
       font-family: 'Montserrat', sans-serif;
     }
     :-ms-input-placeholder {
       /* IE 10+ */
-      color: #24292e;
+      color: ${({ theme }) => theme.colors.gray03};
       font-family: 'Montserrat', sans-serif;
     }
     :-moz-placeholder {
       /* Firefox 18- */
-      color: #24292e;
+      color: ${({ theme }) => theme.colors.gray03};
       font-family: 'Montserrat', sans-serif;
     }
   }

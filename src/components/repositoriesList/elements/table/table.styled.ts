@@ -15,7 +15,7 @@ const Th = styled.th<{ isSortable?: boolean; sortDirection?: string }>`
   font-weight: normal;
   padding: 8px 18px 18px;
   text-align: left;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray};
   user-select: none;
   position: relative;
   ${({ isSortable }) =>
@@ -32,7 +32,7 @@ const Th = styled.th<{ isSortable?: boolean; sortDirection?: string }>`
         :after {
           content: '';
           position: absolute;
-          border-bottom: 5px solid black;
+          border-bottom: 5px solid ${({ theme }) => theme.colors.black};
           border-left: 5px solid transparent;
           border-right: 5px solid transparent;
           top: 40%;
@@ -45,7 +45,7 @@ const Th = styled.th<{ isSortable?: boolean; sortDirection?: string }>`
         :after {
           content: '';
           position: absolute;
-          border-top: 5px solid black;
+          border-top: 5px solid ${({ theme }) => theme.colors.black};
           border-left: 5px solid transparent;
           border-right: 5px solid transparent;
           top: 40%;
@@ -59,14 +59,14 @@ const Th = styled.th<{ isSortable?: boolean; sortDirection?: string }>`
 
 const Td = styled.td`
   padding: 18px;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray};
 `;
 
 const TableRow = styled.tr`
   transition: 0.5s;
 
   &:hover {
-    background: #f2f2f2;
+    background: ${({ theme }) => theme.colors.gray};
   }
 `;
 

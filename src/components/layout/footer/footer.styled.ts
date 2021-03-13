@@ -8,9 +8,8 @@ const StyledFooter = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid gray;
   background: black;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   z-index: 2;
   padding: 15px 20px;
 `;
