@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 import { sortBy } from 'lodash';
 import PuffLoader from 'react-spinners/PuffLoader';
@@ -5,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getFromLocalStorage } from '../../utils/getFromLocalStorage';
 import { LocalStorageKeys } from '../../models/localStorageKeys';
 import { ReactComponent as OpenBookIcon } from '../assets/open-book.svg';
-import Table, { Direction } from './elements/table/Table';
+import Table, { Direction, ComponentProps } from './elements/table/Table';
 import { getRepositoriesAsync, selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
 import { StyledPanel, Title } from './repositoriesList.styled';
 
@@ -22,6 +23,15 @@ const viewModel = {
     {
       header: 'Description',
       field: 'description',
+    },
+    {
+      header: 'Link',
+      field: 'url',
+      component: ({ value }: ComponentProps) => (
+        <a href={value as string} target='_blank' rel='noreferrer'>
+          {value}
+        </a>
+      ),
     },
     {
       header: 'Language',
