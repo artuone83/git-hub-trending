@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getFromLocalStorage } from '../../utils/getFromLocalStorage';
 import { LocalStorageKeys } from '../../models/localStorageKeys';
 import { ReactComponent as OpenBookIcon } from '../assets/open-book.svg';
-import Table, { Direction, ComponentProps } from './elements/table/Table';
+import { Direction, ComponentProps } from './elements/table/Table';
 import { getRepositoriesAsync, selectIsFetching, selectRepositories, setRepositories } from './repositoriesSlice';
 import { StyledPanel, Title } from './repositoriesList.styled';
+import { NoData, Table } from './elements';
 
 const viewModel = {
   fields: [
@@ -66,7 +67,7 @@ const RepositoriesList: React.FC = () => {
 
   useEffect(() => {
     if (repositories.length === 0) {
-      setNoDataMessage('No repositories for selected filtering options');
+      setNoDataMessage('No repositories for selected filtering options...');
     }
   }, [repositories]);
 
@@ -87,7 +88,7 @@ const RepositoriesList: React.FC = () => {
       {repositories.length > 0 ? (
         <Table viewModel={viewModel} data={repositories} onFilterChange={handleFilterChange} />
       ) : (
-        noDataMessage
+        <NoData message={noDataMessage} />
       )}
     </StyledPanel>
   );
