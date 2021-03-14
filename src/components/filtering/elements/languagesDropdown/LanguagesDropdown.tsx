@@ -114,6 +114,7 @@ const LanguagesDropdown = (): JSX.Element => {
   return (
     <Wrapper ref={modalRef} isListVisible={isListVisible} isFetching={isFetching}>
       <LanguageSelector
+        data-testid='language-selector'
         onClick={() => {
           setIsListVisible(!isListVisible);
         }}
@@ -131,6 +132,7 @@ const LanguagesDropdown = (): JSX.Element => {
           return (
             <li
               key={`${name}-${index}`}
+              data-testid='language'
               onClick={() => {
                 handleLangClick(lang);
               }}
