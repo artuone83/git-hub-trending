@@ -6,7 +6,7 @@ Application uses BACKEND from [Github Unofficial Trending API](https://github.co
 
 **!!! IMPORTANT !!!**
 
-Github Unofficial Trending API is **DOWN** you can run it locally using Docker. Follow README file in 
+Github Unofficial Trending API is **DOWN**. You can run it locally using Docker. Follow README file in 
 [Github Unofficial Trending API](https://github.com/huchenme/github-trending-api)
 ## Development
 To develop this project you should:
@@ -19,7 +19,7 @@ To develop this project you should:
 
  - Run this command `make run-project`
  - If you will run to `make: ./setup.sh: Permission denied` run `chmod 777 setup.sh`
- - If something goes wrong you can alway start this project following **Development** steps
+ - If something goes wrong you can always start this project following **Development** steps
 
 ## Technologies
 
@@ -27,6 +27,8 @@ To develop this project you should:
 - Redux
 - TypeScript
 - Styled-components (SASS)
+- Jest
+- React Testing Library
 
 ## Code owner
 
