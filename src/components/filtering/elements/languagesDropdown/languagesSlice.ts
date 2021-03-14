@@ -44,7 +44,7 @@ export const getLanguagesAsync = (): AppThunk => (dispatch) => {
   try {
     const getLanguages = async (): Promise<LanguagesResponse[]> => {
       dispatch(setIsFetching(true));
-      const response = await fetch('http://localhost:9000/languages');
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/languages`);
 
       if (!response.ok) {
         throw new Error('Http error: could not get languages');
