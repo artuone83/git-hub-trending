@@ -92,10 +92,10 @@ const Table: FC<TableProps> = ({ viewModel, data, onFilterChange }) => {
         </thead>
         <tbody>
           {data.map((dataItem) => (
-            <TableRow key={`row-${dataItem.id}`}>
+            <TableRow key={`row-${dataItem.name}`}>
               {viewModel.fields.map(({ field, component }, rowIndex) => (
                 // eslint-disable-next-line react/no-array-index-key
-                <Td key={`${dataItem.id}-${rowIndex}`}>
+                <Td key={`${dataItem.name}-${rowIndex}`}>
                   {component
                     ? component({
                         value: dataItem[field],
