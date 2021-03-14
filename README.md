@@ -6,7 +6,7 @@ Application uses BACKEND from [Github Unofficial Trending API](https://github.co
 
 **!!! IMPORTANT !!!**
 
-Github Unofficial Trending API is **DOWN** you can run it locally using docker. Follow README file in 
+Github Unofficial Trending API is **DOWN** you can run it locally using Docker. Follow README file in 
 [Github Unofficial Trending API](https://github.com/huchenme/github-trending-api)
 ## Development
 To develop this project you should:
