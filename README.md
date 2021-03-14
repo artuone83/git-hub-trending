@@ -1,4 +1,4 @@
-# Github Trending Fronted App
+# Github Trending Frontend App
 
 Repository contains UI application called GitHub Trending Repositories
 
