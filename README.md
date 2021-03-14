@@ -25,6 +25,7 @@ To develop this project you should:
 
 - ReactJS
 - Redux
+- Redux Toolkit
 - TypeScript
 - Styled-components (SASS)
 - Jest
