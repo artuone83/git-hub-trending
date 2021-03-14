@@ -15,7 +15,11 @@ To develop this project you should:
 -  run `npm install`
 - and then `npm start`.
 
+## Alternative Setup
 
+ - Run this command `make run-project`
+ - If you will run to `make: ./setup.sh: Permission denied` run `chmod 777 setup.sh`
+ - If something goes wrong you can alway start this project following **Development** steps
 
 ## Technologies
 

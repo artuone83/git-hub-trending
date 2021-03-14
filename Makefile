@@ -1,0 +1,2 @@
+run-project:
+		./setup.sh

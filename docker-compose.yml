@@ -1,0 +1,12 @@
+version: "2.1"
+services:
+  github-trending-api-backend:
+    container_name: github-trending-api-backend
+    image: github-trending-api:latest
+    ports:
+      - 8000:8888
+  github-trending-api-frontend:
+    container_name: github-trenging-api-frontend
+    image: github-trending-api-frontend:latest
+    ports:
+      - 5005:5005
