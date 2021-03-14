@@ -42,12 +42,13 @@ export const selectLanguageChoice = (state: RootState): string => state.language
 
 export const getLanguagesAsync = (): AppThunk => (dispatch) => {
   try {
-    const getLanguages = async (): Promise<LanguagesResponse[] | null> => {
+    const getLanguages = async (): Promise<LanguagesResponse[]> => {
       dispatch(setIsFetching(true));
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/languages`);
 
       if (!response.ok) {
-        return null;
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
       }
 
       const data = await response.json();
@@ -55,15 +56,15 @@ export const getLanguagesAsync = (): AppThunk => (dispatch) => {
       return data;
     };
 
-    getLanguages().then((data) => {
-      if (data) {
+    getLanguages()
+      .then((data) => {
         dispatch(setLanguages(data as LanguagesResponse[]));
-      } else {
-        // dispatch isError
-      }
-
-      dispatch(setIsFetching(false));
-    });
+        dispatch(setIsFetching(false));
+      })
+      .catch((error) => {
+        console.error(error.message);
+        dispatch(setIsFetching(false));
+      });
   } catch (error) {
     console.error(error.message);
     dispatch(setIsFetching(false));
