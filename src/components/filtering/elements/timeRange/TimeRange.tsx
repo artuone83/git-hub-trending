@@ -56,7 +56,12 @@ const TimeRange = (): JSX.Element => {
   return (
     <Tabs>
       {since.map(({ name, value, id }) => (
-        <TimeRangeTab key={id} isActive={activeTimeRange === value} onClick={() => handleTimeRangeClick(value)}>
+        <TimeRangeTab
+          key={id}
+          data-testid='since'
+          isActive={activeTimeRange === value}
+          onClick={() => handleTimeRangeClick(value)}
+        >
           {name}
         </TimeRangeTab>
       ))}

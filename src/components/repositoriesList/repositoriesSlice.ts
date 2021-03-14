@@ -42,7 +42,7 @@ export const selectIsFetching = (state: RootState): boolean => state.repositorie
 
 export const getRepositoriesAsync = (language = '', timeRange = ''): AppThunk => (dispatch) => {
   try {
-    const getRepositories = async (): Promise<RepositoriesResponse[]> => {
+    const getRepositories = async (): Promise<RepositoriesResponse[] | null> => {
       dispatch(setIsFetching(true));
 
       const baseUrl = new URL(`${process.env.REACT_APP_BASE_URL}`);
@@ -56,14 +56,22 @@ export const getRepositoriesAsync = (language = '', timeRange = ''): AppThunk =>
       const response = await fetch(urlWithParams);
 
       if (!response.ok) {
-        throw new Error('Could not get repositories');
+        return null;
       }
 
       const data = response.json();
-      dispatch(setIsFetching(false));
+
       return data;
     };
-    getRepositories().then((data) => dispatch(setRepositories(data)));
+    getRepositories().then((data) => {
+      if (data) {
+        dispatch(setRepositories(data as RepositoriesResponse[]));
+      } else {
+        // dispatch isError
+      }
+
+      dispatch(setIsFetching(false));
+    });
   } catch (error) {
     console.error(error.message);
     dispatch(setIsFetching(false));
