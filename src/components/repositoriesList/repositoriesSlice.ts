@@ -45,9 +45,15 @@ export const getRepositoriesAsync = (language = '', timeRange = ''): AppThunk =>
     const getRepositories = async (): Promise<RepositoriesResponse[]> => {
       dispatch(setIsFetching(true));
 
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/repositories?language=${language}&since=${timeRange}`
-      );
+      const baseUrl = new URL(`${process.env.REACT_APP_BASE_URL}`);
+
+      const params = new URLSearchParams(baseUrl.search);
+      params.set('language', language);
+      params.set('since', timeRange);
+
+      const urlWithParams = `${process.env.REACT_APP_BASE_URL}/repositories?${params.toString()}`;
+
+      const response = await fetch(urlWithParams);
 
       if (!response.ok) {
         throw new Error('Could not get repositories');

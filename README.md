@@ -20,9 +20,9 @@ To develop this project you should:
 ## Technologies
 
 - ReactJS
-- Styled-components (SASS)
 - Redux
 - TypeScript
+- Styled-components (SASS)
 
 ## Code owner
 
