@@ -6,6 +6,7 @@ const StyledNoData = styled.div`
   align-items: center;
   min-height: 250px;
   border: 1px solid ${({ theme }) => theme.colors.gray03};
+  text-align: center;
 `;
 
 export { StyledNoData };

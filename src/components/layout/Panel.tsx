@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   padding: 20px 24px;
-  background: white;
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 export interface PanelProps {

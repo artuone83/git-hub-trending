@@ -4,6 +4,7 @@ const Tabs = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const TimeRangeTab = styled.div<{ isActive: boolean }>`

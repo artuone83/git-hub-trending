@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import zIndex from '../../../../styles/zIndex';
 
 const StyledSearchBar = styled.div`
   padding: 10px 5px;
@@ -6,8 +7,8 @@ const StyledSearchBar = styled.div`
   top: 0;
   right: 0;
   left: 0;
-  background: white;
-  z-index: 2;
+  background: ${({ theme }) => theme.colors.white};
+  z-index: ${zIndex.level2};
 
   input {
     padding: 8px 4px;

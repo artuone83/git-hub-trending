@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import media from '../../../../styles/media';
 import zIndex from '../../../../styles/zIndex';
 
 const Wrapper = styled.div<{ isListVisible: boolean; isFetching: boolean }>`
@@ -10,6 +11,10 @@ const Wrapper = styled.div<{ isListVisible: boolean; isFetching: boolean }>`
     margin-left: 10px;
     transition: 0.5s;
     transform: ${({ isListVisible }) => (isListVisible ? 'rotate(180deg)' : 'rotate(0)')};
+  }
+
+  ${media.phone} {
+    margin-bottom: 20px;
   }
 `;
 

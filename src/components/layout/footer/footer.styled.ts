@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import zIndex from '../../../styles/zIndex';
 
 const StyledFooter = styled.footer`
   position: fixed;
@@ -10,7 +11,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   background: black;
   color: ${({ theme }) => theme.colors.white};
-  z-index: 2;
+  z-index: ${zIndex.level2};
   padding: 15px 20px;
 
   h1 {
