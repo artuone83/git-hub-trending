@@ -44,7 +44,7 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
   box-shadow: ${({ theme }) => theme.boxShadow.dp_9};
   z-index: ${zIndex.level1};
 
-  li {
+  li:not(:first-of-type) {
     padding: 12px 14px;
     cursor: pointer;
     transition: 0.5s;

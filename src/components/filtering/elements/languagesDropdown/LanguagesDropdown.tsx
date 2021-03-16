@@ -124,7 +124,9 @@ const LanguagesDropdown = (): JSX.Element => {
       </LanguageSelector>
 
       <LanguagesList isListVisible={isListVisible}>
-        <SearchBar handleSearchChange={handleSearchChange} searchValue={searchValue} />
+        <li>
+          <SearchBar handleSearchChange={handleSearchChange} searchValue={searchValue} />
+        </li>
         {filteredLanguages.map((lang, index) => {
           const { name } = lang;
 
