@@ -18,6 +18,7 @@ To develop this project you should:
 ## Alternative Setup
 
  - Run this command `make run-project`
+ - The application will be alive on port 5005 (localhost:5005)
  - If you will run to `make: ./setup.sh: Permission denied` run `chmod 777 setup.sh`
  - If something goes wrong you can always start this project following **Development** steps
 
