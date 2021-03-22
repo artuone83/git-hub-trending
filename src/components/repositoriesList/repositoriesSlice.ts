@@ -41,42 +41,39 @@ export const selectRepositories = (state: RootState): RepositoriesResponse[] => 
 export const selectIsFetching = (state: RootState): boolean => state.repositories.isFetching;
 
 export const getRepositoriesAsync = (language = '', timeRange = ''): AppThunk => (dispatch) => {
-  try {
-    const getRepositories = async (): Promise<RepositoriesResponse[]> => {
-      dispatch(setIsFetching(true));
+  const getRepositories = async (): Promise<RepositoriesResponse[]> => {
+    dispatch(setIsFetching(true));
 
-      const baseUrl = new URL(`${process.env.REACT_APP_BASE_URL}`);
+    const baseUrl = new URL(`${process.env.REACT_APP_BASE_URL}`);
 
-      const params = new URLSearchParams(baseUrl.search);
-      params.set('language', language);
-      params.set('since', timeRange);
+    const params = new URLSearchParams(baseUrl.search);
+    params.set('language', language);
+    params.set('since', timeRange);
 
-      const urlWithParams = `${process.env.REACT_APP_BASE_URL}/repositories?${params.toString()}`;
+    const urlWithParams = `${process.env.REACT_APP_BASE_URL}/repositories?${params.toString()}`;
 
-      const response = await fetch(urlWithParams);
+    const response = await fetch(urlWithParams);
 
-      if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
-      }
+    if (!response.ok) {
+      const message = `An error has occured: ${response.status}`;
+      throw new Error(message);
+    }
 
-      const data = response.json();
+    const data = response.json();
 
-      return data;
-    };
-    getRepositories()
-      .then((data) => {
-        dispatch(setRepositories(data as RepositoriesResponse[]));
-        dispatch(setIsFetching(false));
-      })
-      .catch((error) => {
-        console.error(error.message);
-        dispatch(setIsFetching(false));
-      });
-  } catch (error) {
-    console.error(error.message);
-    dispatch(setIsFetching(false));
-  }
+    return data;
+  };
+
+  (async () => {
+    try {
+      const data = await getRepositories();
+      dispatch(setRepositories(data as RepositoriesResponse[]));
+      dispatch(setIsFetching(false));
+    } catch (error) {
+      console.error(error.message);
+      dispatch(setIsFetching(false));
+    }
+  })();
 };
 
 export default repositoriesSlice.reducer;
