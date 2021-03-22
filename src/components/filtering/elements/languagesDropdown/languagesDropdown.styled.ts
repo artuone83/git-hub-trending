@@ -44,13 +44,24 @@ const LanguagesList = styled.ul<{ isListVisible: boolean }>`
   box-shadow: ${({ theme }) => theme.boxShadow.dp_9};
   z-index: ${zIndex.level1};
 
-  li:not(:first-of-type) {
-    padding: 12px 14px;
-    cursor: pointer;
-    transition: 0.5s;
+  li {
+    &:first-of-type {
+      position: sticky;
+      top: 0;
+      right: 0;
+      left: 0;
+    }
+  }
 
-    &:hover {
-      background: ${({ theme }) => theme.colors.grayTable};
+  li {
+    &:not(:first-of-type) {
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: 0.5s;
+
+      &:hover {
+        background: ${({ theme }) => theme.colors.grayTable};
+      }
     }
   }
 `;

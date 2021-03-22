@@ -3,10 +3,6 @@ import zIndex from '../../../../styles/zIndex';
 
 const StyledSearchBar = styled.div`
   padding: 10px 5px;
-  position: sticky;
-  top: 0;
-  right: 0;
-  left: 0;
   background: ${({ theme }) => theme.colors.white};
   z-index: ${zIndex.level2};
 
