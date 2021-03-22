@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
-import { sortBy } from 'lodash';
+import sortBy from 'lodash/sortBy';
 import PuffLoader from 'react-spinners/PuffLoader';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFromLocalStorage } from '../../utils/getFromLocalStorage';

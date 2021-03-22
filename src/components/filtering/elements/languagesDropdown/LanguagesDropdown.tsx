@@ -21,7 +21,7 @@ import {
 } from './languagesSlice';
 import { Wrapper, LanguagesList, LanguageSelector } from './languagesDropdown.styled';
 
-const LanguagesDropdown = (): JSX.Element => {
+const LanguagesDropdown: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState({
     name: 'Select language',
     urlParam: '',
